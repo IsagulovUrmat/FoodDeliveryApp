@@ -15,11 +15,12 @@ class AppCoordinator: Coordinator {
     override func start() {
 //        showOnboardingFlow()
 //         MARK: - Раскомментировать что бы работала логика перехода на главное приложение
-        if userStorage.passedOnboarding {
-            showAuthFlow()
-        } else {
-            showOnboardingFlow()
-        }
+//        if userStorage.passedOnboarding {
+//            showAuthFlow()
+//        } else {
+//            showOnboardingFlow()
+//        }
+        showMainFlow()
 //        let loginPresenter = LoginPresenter(coordinator: self)
 //        let loginVC = LoginViewController(viewOutout: loginPresenter, state: .initial)
 //        navigationController?.pushViewController(loginVC, animated: true)

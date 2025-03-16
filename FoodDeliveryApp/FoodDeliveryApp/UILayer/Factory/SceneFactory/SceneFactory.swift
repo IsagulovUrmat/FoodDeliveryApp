@@ -65,25 +65,25 @@ struct SceneFactory {
         
         let homeNavigationController = UINavigationController()
         let homeCoordinator = HomeCoordinator(type: .home, navigationController: homeNavigationController)
-        homeNavigationController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "book"), tag: 0)
+        homeNavigationController.tabBarItem = UITabBarItem(title: "Home", image: .home, tag: 0)
         homeCoordinator.finisDelegate = finishDelegate
         homeCoordinator.start()
         
         let orderNavigationController = UINavigationController()
         let orderCoordinator = OrderCoordinator(type: .order, navigationController: orderNavigationController)
-        orderNavigationController.tabBarItem = UITabBarItem(title: "Order", image: UIImage(systemName: "book"), tag: 1)
+        orderNavigationController.tabBarItem = UITabBarItem(title: "Order", image: .order, tag: 1)
         orderCoordinator.finisDelegate = finishDelegate
         orderCoordinator.start()
         
         let listNavigationController = UINavigationController()
         let listCoordinator = ListCoordinator(type: .list, navigationController: listNavigationController)
-        listNavigationController.tabBarItem = UITabBarItem(title: "My List", image: UIImage(systemName: "book"), tag: 2)
+        listNavigationController.tabBarItem = UITabBarItem(title: "My List", image: .list, tag: 2)
         listCoordinator.finisDelegate = finishDelegate
         listCoordinator.start()
         
         let profileNavigationController = UINavigationController()
         let profileCoordinator = ProfileCoordinator(type: .profile, navigationController: profileNavigationController)
-        profileNavigationController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "book"), tag: 3)
+        profileNavigationController.tabBarItem = UITabBarItem(title: "Profile", image: .user, tag: 3)
         profileCoordinator.finisDelegate = finishDelegate
         profileCoordinator.start()
         
