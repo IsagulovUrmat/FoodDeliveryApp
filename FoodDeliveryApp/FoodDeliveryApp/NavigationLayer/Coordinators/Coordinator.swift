@@ -10,6 +10,7 @@ import UIKit
 enum CoordinatorType {
     case app
     case onboarding
+    case login
     case home
     case order
     case list
@@ -48,9 +49,9 @@ class Coordinator: CoordinatorProtocol {
     var childCoordinators: [any CoordinatorProtocol]
     var type: CoordinatorType
     var navigationController: UINavigationController?
-    var finisDelegate: (any CoordinatorFinishDelegate)?
+    weak var finisDelegate: CoordinatorFinishDelegate?
     
-    init(childCoordinators: [any CoordinatorProtocol] = [CoordinatorProtocol]() , type: CoordinatorType, navigationController: UINavigationController, finisDelegate: (any CoordinatorFinishDelegate)? = nil) {
+    init(childCoordinators: [CoordinatorProtocol] = [CoordinatorProtocol]() , type: CoordinatorType, navigationController: UINavigationController, finisDelegate: (any CoordinatorFinishDelegate)? = nil) {
         self.childCoordinators = childCoordinators
         self.type = type
         self.navigationController = navigationController
