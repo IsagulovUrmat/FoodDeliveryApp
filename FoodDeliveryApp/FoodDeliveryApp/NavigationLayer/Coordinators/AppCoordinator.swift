@@ -15,13 +15,14 @@ class AppCoordinator: Coordinator {
     override func start() {
 //        showOnboardingFlow()
 //         MARK: - Раскомментировать что бы работала логика перехода на главное приложение
-//        if userStorage.passedOnboarding {
-//            showMainFlow()
-//        } else {
-//            showOnboardingFlow()
-//        }
-        let loginVC = LoginViewController()
-        navigationController?.pushViewController(loginVC, animated: true)
+        if userStorage.passedOnboarding {
+            showAuthFlow()
+        } else {
+            showOnboardingFlow()
+        }
+//        let loginPresenter = LoginPresenter(coordinator: self)
+//        let loginVC = LoginViewController(viewOutout: loginPresenter, state: .initial)
+//        navigationController?.pushViewController(loginVC, animated: true)
     }
     
     override func finish() {
@@ -33,7 +34,8 @@ class AppCoordinator: Coordinator {
 private extension AppCoordinator {
     func showOnboardingFlow() {
         guard let navigationController = navigationController else { return }
-        factory.makeOnboardingFlow(coordinator: self ,finishDelegate: self, navigationController: navigationController)
+        let onboardingCoordinator = factory.makeOnboardingFlow(coordinator: self ,finishDelegate: self, navigationController: navigationController)
+        onboardingCoordinator.start()
     }
     
     func showMainFlow() {
@@ -41,16 +43,27 @@ private extension AppCoordinator {
         let tabBarController = factory.makeMainFlow(coordinator: self, finishDelegate: self)
         navigationController.pushViewController(tabBarController, animated: false)
     }
+    
+    func showAuthFlow() {
+        guard let navigationController = navigationController else { return }
+        let loginCoordinator = factory.makeLoginFlow(coordinator: self, finishDelegate: self, navigationController: navigationController)
+        loginCoordinator.start()
+    }
 }
 
+
+// MARK: - CoordinatorFinishDelegate
 extension AppCoordinator: CoordinatorFinishDelegate {
     func coordinatorDidFinish(childCoordinator: any CoordinatorProtocol) {
         removeChildCoordinator(childCoordinator)
         
         switch childCoordinator.type {
         case .onboarding:
-            navigationController?.viewControllers.removeAll()
+            showAuthFlow()
+            navigationController?.viewControllers = [navigationController?.viewControllers.last ?? UIViewController()]
+        case .login:
             showMainFlow()
+            navigationController?.viewControllers = [navigationController?.viewControllers.last ?? UIViewController()]
         case .app:
             return
         default:

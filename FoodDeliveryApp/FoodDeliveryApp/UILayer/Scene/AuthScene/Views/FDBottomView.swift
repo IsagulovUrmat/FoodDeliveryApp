@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BottomView: UIView {
+class FDBottomView: UIView {
     
     private let label = UILabel()
     private let view1 = UIView()
@@ -67,12 +67,14 @@ class BottomView: UIView {
         view2.translatesAutoresizingMaskIntoConstraints = false
         view2.backgroundColor = .clear
         view2.image = UIImage(named: "bottomViewImage")
+        view2.contentMode = .scaleAspectFit
+        view2.clipsToBounds = true
         
         NSLayoutConstraint.activate([
             view2.topAnchor.constraint(equalTo: view1.bottomAnchor, constant: 18),
-            view2.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -60),
-            view2.heightAnchor.constraint(equalToConstant: 150),
-            view2.widthAnchor.constraint(equalToConstant: 282),
+            view2.leadingAnchor.constraint(equalTo: leadingAnchor),
+            view2.heightAnchor.constraint(equalToConstant: 160),
+            view2.widthAnchor.constraint(equalToConstant: 250),
         ])
     }
     
@@ -102,7 +104,7 @@ class BottomView: UIView {
     
 }
 
-private extension BottomView {
+private extension FDBottomView {
     
     @objc func button1Tappaed() {
         button1Action?()
