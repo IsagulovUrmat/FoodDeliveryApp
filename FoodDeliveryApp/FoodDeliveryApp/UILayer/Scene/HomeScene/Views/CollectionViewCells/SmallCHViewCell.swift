@@ -11,6 +11,8 @@ class SmallCHViewCell: UICollectionViewCell {
     
     let topView = UIView()
     let bottomLabel = UILabel()
+    let imageView = UIImageView()
+    var isCategorySelected = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,8 +23,39 @@ class SmallCHViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configure(with category: FoodCategory) {
+        bottomLabel.text = category.rawValue
+        switch category {
+        case .drink:
+            imageView.image = .drink.withTintColor(isCategorySelected ? .white : .black)
+        case .snack:
+            imageView.image = .snack.withTintColor(isCategorySelected ? .white : .black)
+        case .food:
+            imageView.image = .food.withTintColor(isCategorySelected ? .white : .black)
+        case .cake:
+            imageView.image = .cake.withTintColor(isCategorySelected ? .white : .black)
+        case .salad:
+            imageView.image = .salad.withTintColor(isCategorySelected ? .white : .black)
+        case .seaFood:
+            imageView.image = .seafood.withTintColor(isCategorySelected ? .white : .black)
+        case .none:
+            imageView.image = .nopic.withTintColor(isCategorySelected ? .white : .black)
+        }
+    }
+    
+    func toggleSelection() {
+        if isCategorySelected {
+            imageView.image = imageView.image?.withTintColor(.black)
+            topView.backgroundColor = AppColor.gray
+        } else {
+            imageView.image = imageView.image?.withTintColor(.white)
+            topView.backgroundColor = AppColor.accentOrange
+        }
+        isCategorySelected.toggle()
+    }
+    
     func setupCell() {
-        contentView.backgroundColor = .blue
+        contentView.backgroundColor = .clear
         setupTopView()
         setupBottomLabel()
     }
@@ -31,7 +64,7 @@ class SmallCHViewCell: UICollectionViewCell {
         contentView.addSubview(topView)
         topView.translatesAutoresizingMaskIntoConstraints = false
         
-        topView.backgroundColor = .green
+        topView.backgroundColor = AppColor.gray
         topView.layer.cornerRadius = 20
         topView.layer.masksToBounds = true
         
@@ -41,6 +74,20 @@ class SmallCHViewCell: UICollectionViewCell {
             topView.heightAnchor.constraint(equalToConstant: 70),
             topView.widthAnchor.constraint(equalToConstant: 70),
         ])
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        
+        topView.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 30),
+            imageView.widthAnchor.constraint(equalToConstant: 30),
+            
+        ])
     }
     
     func setupBottomLabel() {
@@ -49,7 +96,7 @@ class SmallCHViewCell: UICollectionViewCell {
         
         bottomLabel.font = .Roboto.regular.size(of: 14)
         bottomLabel.text = "test label"
-        bottomLabel.textColor = .white
+        bottomLabel.textColor = AppColor.black
         
         NSLayoutConstraint.activate([
             bottomLabel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 5),
