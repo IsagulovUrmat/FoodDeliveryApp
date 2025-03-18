@@ -49,13 +49,15 @@ class Coordinator: CoordinatorProtocol {
     var childCoordinators: [any CoordinatorProtocol]
     var type: CoordinatorType
     var navigationController: UINavigationController?
+    var window: UIWindow?
     weak var finisDelegate: CoordinatorFinishDelegate?
     
-    init(childCoordinators: [CoordinatorProtocol] = [CoordinatorProtocol]() , type: CoordinatorType, navigationController: UINavigationController, finisDelegate: (any CoordinatorFinishDelegate)? = nil) {
+    init(childCoordinators: [CoordinatorProtocol] = [CoordinatorProtocol]() , type: CoordinatorType, navigationController: UINavigationController, finisDelegate: (any CoordinatorFinishDelegate)? = nil, window: UIWindow? = nil) {
         self.childCoordinators = childCoordinators
         self.type = type
         self.navigationController = navigationController
         self.finisDelegate = finisDelegate
+        self.window = window
     }
     
     deinit {
